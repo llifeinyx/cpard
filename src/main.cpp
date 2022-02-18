@@ -1,11 +1,9 @@
 //Код платы принимателя (принимает через цифровой пин информацию, записывает в структуру и корректрует подключенныйе серво);
 #define BOARD_ADDR 2 //адрес платы принимателя начинается с 2
-#define NET_PIN 4 //цифровой пин который подключен подключен к сети GBUS  
+#define NET_PIN 42 //цифровой пин который подключен подключен к сети GBUS  
 
 
 #include <Arduino.h>
-#include <GyverBus.h>
-#include <GBUS.h>
 #include <GBUSmini.h>
 
 struct BoardInfo{
@@ -18,10 +16,11 @@ uint8_t byteBufferToReadInfo[sizeof(bufferToReadInfo)];
 
 void setup() {
   pinMode(NET_PIN, INPUT_PULLUP);
-  //pinMode(NET_PIN, INPUT);
+  digitalWrite(NET_PIN, HIGH);
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
-  Serial.println("I'm alive!");
+  //delay(750);
+  //sett
 }
 
 void loop() {
@@ -30,6 +29,7 @@ void loop() {
   // } else {
   //   digitalWrite(LED_BUILTIN, LOW);
   // }
+  //Serial.println(digitalRead(NET_PIN));
   if(GBUS_read(NET_PIN, BOARD_ADDR, byteBufferToReadInfo, sizeof(byteBufferToReadInfo))){
     digitalWrite(LED_BUILTIN, HIGH);
     unpackDataBytes(byteBufferToReadInfo, bufferToReadInfo);
@@ -39,7 +39,6 @@ void loop() {
     Serial.print(", ");
     Serial.print(bufferToReadInfo.rotate_val);
     Serial.println();
-    delay(500);
     digitalWrite(LED_BUILTIN, LOW);
     delay(500);
   }
