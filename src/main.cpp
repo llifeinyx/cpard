@@ -22,7 +22,7 @@ void testSend();
 
 void setup() {
   pinMode(NET_PIN, INPUT_PULLUP);
-  //pinMode(NET_PIN, OUTPUT);
+  digitalWrite(NET_PIN, HIGH);
   pinMode(LED_BUILTIN, OUTPUT); 
   Serial.begin(9600);
 }
@@ -31,15 +31,8 @@ void loop() {
   if(Serial.available()){
     getCommand(Serial.readString());
   }
-  //digitalWrite(NET_PIN, LOW);
-  //delay(1000);
-  //digitalWrite(NET_PIN, HIGH);
-  //delay(1000);
+  //delay(1500);
   //testSend();
-  //digitalWrite(LED_BUILTIN, HIGH);
-  //delay(1000);
-  //digitalWrite(LED_BUILTIN, LOW);
-  //delay(1000);
 }
 
 void getCommand(String portStr){
